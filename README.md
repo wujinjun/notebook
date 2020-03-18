@@ -4,12 +4,12 @@
 
 * [序](README.md)
 * 数据结构和算法
-    * [数据结构](./datastructure_and_algotithm/data_sturcture.md)
-    * [算法](./datastructure_and_algotithm/algorithm.md)
-
+    * [数据结构](https://github.com/wujinjun/notebook/blob/master/datastructure_and_algorithm/data_sturcture.md)
+    * [算法](https://github.com/wujinjun/notebook/blob/master/datastructure_and_algorithm/algorithm.md)
+    * 
 * UML和设计模式
 
-    * [UML笔记](./UML_and_design_pattern/UML.md)
+    * [UML笔记](https://github.com/wujinjun/notebook/blob/master/UML_and_Design_Pattern/UML.md)
 
 * CPP
 
