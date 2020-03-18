@@ -4,8 +4,8 @@
 
 * [序](README.md)
 * 数据结构和算法
-    * [数据结构](datastructure_and_algotithm/data_sturcture.md)
-    * [算法](datastructure_and_algotithm/algorithm.md)
+    * [数据结构](./datastructure_and_algotithm/data_sturcture.md)
+    * [算法](./datastructure_and_algotithm/algorithm.md)
 
 * UML和设计模式
 		* [UML笔记](UML_and_design_pattern/UML.md)
