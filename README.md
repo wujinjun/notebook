@@ -1,16 +1,22 @@
-# 技能栈记事本
 
-## 数据结构和算法（日更）
+### 个人技术学习笔记
+为了方便索引和同步，逐步合并更新到这里来
 
-## [UML和设计模式（周一~周三更）](UML_and_Design_Pattern)
+* [序](README.md)
+* 数据结构和算法
+    * [数据结构笔记](Datastructure_and_algotithm/data_sturcture.md)
+    * [算法笔记](Datastructure_and_algotithm/algorithm.md)
 
-## C++ (周四更)
+* UML和设计模式
+		* [UML笔记](UML_and_Design_pattern/UML.md)
 
-## 操作系统（周五更）
+* CPP
 
-## python和数据分析（周六更）
+* 操作系统
 
-## AI算法（周日更）
+* python和数据分析
 
-## tensorflow(周日更)
+* AI算法
+
+* Tensorflow
 
