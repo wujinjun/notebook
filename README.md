@@ -9,7 +9,7 @@
     * 
 * UML和设计模式
 
-    * [UML笔记](UML_and_Design_Pattern/UML.md)
+    * [UML笔记](UML_and_design_pattern/UML.md)
 
 * CPP
 
