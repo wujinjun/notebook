@@ -4,11 +4,11 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>剑指offer · Sample GitBook</title>
+        <title>剑指offer · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
-        <meta name="author" content="Wu Jinjun <xnwujj@foxmail.com>">
+        
         
         
     
@@ -17,19 +17,7 @@
     
             
                 
-                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-highlight-pro/highlight-pro.min.css">
-                
-            
-                
-                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-highlight-pro/school-book.png">
-                
-            
-                
-                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-highlight-pro/pojoaque.jpg">
-                
-            
-                
-                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-highlight-pro/brown-papersq.png">
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-highlight/website.css">
                 
             
                 
@@ -96,16 +84,7 @@
 <ul class="summary">
     
     
-    
-        
-        <li>
-            <a href="https://github.com/wujinjun/notebook" target="_blank" class="custom-link">Wujinjun's Github</a>
-        </li>
-    
-    
 
-    
-    <li class="divider"></li>
     
 
     
@@ -378,7 +357,7 @@
 </ol>
 </li>
 </ul>
-<pre><code class="hljs monokai">/*
+<pre><code class="lang-cpp"><span class="hljs-comment">/*
 struct TreeNode {
     int val;
     struct TreeNode *left;
@@ -386,36 +365,36 @@ struct TreeNode {
     TreeNode(int x) :
             val(x), left(NULL), right(NULL) {
     }
-};*/
-class Solution {
-public:
-    vector<vector<int>&gt; res;
-    vector<int> path;
-    void dfsFind(TreeNode* node, int sum) {
-        if (node == NULL) {
-            return;
+};*/</span>
+<span class="hljs-keyword">class</span> Solution {
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt; res;
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; path;
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">dfsFind</span><span class="hljs-params">(TreeNode* node, <span class="hljs-keyword">int</span> sum)</span> </span>{
+        <span class="hljs-keyword">if</span> (node == <span class="hljs-literal">NULL</span>) {
+            <span class="hljs-keyword">return</span>;
         }
-        path.push_back(node-&gt;val);        //path&#x6570;&#x7EC4;&#x8BB0;&#x5F55;&#x8282;&#x70B9;
-          // &#x5224;&#x65AD;&#x662F;&#x5426;&#x4E3A;&#x53F6;&#x5B50;&#x8282;&#x70B9;&#xFF0C;&#x4E14;&#x6EE1;&#x8DB3;&#x548C;&#x503C;&#x6761;&#x4EF6;
-        if (node-&gt;left == NULL &amp;&amp; node-&gt;right == NULL &amp;&amp; sum == node-&gt;val) {
+        path.push_back(node-&gt;val);        <span class="hljs-comment">//path&#x6570;&#x7EC4;&#x8BB0;&#x5F55;&#x8282;&#x70B9;</span>
+          <span class="hljs-comment">// &#x5224;&#x65AD;&#x662F;&#x5426;&#x4E3A;&#x53F6;&#x5B50;&#x8282;&#x70B9;&#xFF0C;&#x4E14;&#x6EE1;&#x8DB3;&#x548C;&#x503C;&#x6761;&#x4EF6;</span>
+        <span class="hljs-keyword">if</span> (node-&gt;left == <span class="hljs-literal">NULL</span> &amp;&amp; node-&gt;right == <span class="hljs-literal">NULL</span> &amp;&amp; sum == node-&gt;val) {
             res.push_back(path);
-        } else {    // &#x4E0D;&#x662F;&#x53F6;&#x5B50;&#x8282;&#x70B9;&#xFF0C;&#x7EE7;&#x7EED;&#x9012;&#x5F52;
-            if (node-&gt;left) {
+        } <span class="hljs-keyword">else</span> {    <span class="hljs-comment">// &#x4E0D;&#x662F;&#x53F6;&#x5B50;&#x8282;&#x70B9;&#xFF0C;&#x7EE7;&#x7EED;&#x9012;&#x5F52;</span>
+            <span class="hljs-keyword">if</span> (node-&gt;left) {
                 dfsFind(node-&gt;left, sum - node-&gt;val);
             }
-            if (node-&gt;right) {
+            <span class="hljs-keyword">if</span> (node-&gt;right) {
                 dfsFind(node-&gt;right, sum - node-&gt;val);
             }
         }
-        path.pop_back();     //&#x4E0D;&#x80FD;&#x88AB;&#x9012;&#x5F52;&#xFF0C;&#x4E5F;&#x4E0D;&#x6EE1;&#x8DB3;&#x548C;&#x503C;&#x6761;&#x4EF6;&#xFF0C;&#x5C31;&#x5F39;&#x51FA;&#x8BE5;&#x8282;&#x70B9;
+        path.pop_back();     <span class="hljs-comment">//&#x4E0D;&#x80FD;&#x88AB;&#x9012;&#x5F52;&#xFF0C;&#x4E5F;&#x4E0D;&#x6EE1;&#x8DB3;&#x548C;&#x503C;&#x6761;&#x4EF6;&#xFF0C;&#x5C31;&#x5F39;&#x51FA;&#x8BE5;&#x8282;&#x70B9;</span>
     }
 
-    vector<vector<int> &gt; FindPath(TreeNode* root,int expectNumber) {
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; &gt; FindPath(TreeNode* root,<span class="hljs-keyword">int</span> expectNumber) {
         dfsFind(root, expectNumber);
-        return res;
+        <span class="hljs-keyword">return</span> res;
     }
 };
-</vector<int></int></vector<int></code></pre>
+</code></pre>
 
                                 
                                 </section>
@@ -455,7 +434,7 @@ public:
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"剑指offer","level":"1.9.1","depth":2,"next":{"title":"leetecode","level":"1.9.2","depth":2,"path":"coding_practice/leetcode/resolution.md","ref":"coding_practice/leetcode/resolution.md","articles":[]},"previous":{"title":"刷题","level":"1.9","depth":1,"ref":"","articles":[{"title":"剑指offer","level":"1.9.1","depth":2,"path":"coding_practice/sword_offer/resolution.md","ref":"coding_practice/sword_offer/resolution.md","articles":[]},{"title":"leetecode","level":"1.9.2","depth":2,"path":"coding_practice/leetcode/resolution.md","ref":"coding_practice/leetcode/resolution.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["theme-comscore","-highlight","highlight-pro"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight-pro":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-comscore":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Wu Jinjun <xnwujj@foxmail.com>","pdf":{"pageBreaksBefore":"/","headerTemplate":null,"paperSize":"a4","margin":{"right":62,"left":62,"top":36,"bottom":36},"fontSize":12,"fontFamily":"Arial","footerTemplate":null,"chapterMark":"pagebreak","pageNumbers":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Sample GitBook","links":{"sharing":{"all":null,"facebook":null,"google":null,"twitter":null,"weibo":null},"sidebar":{"Wujinjun's Github":"https://github.com/wujinjun/notebook"}},"gitbook":"*","description":"My notebook created by gitbook","extension":null},"file":{"path":"coding_practice/sword_offer/resolution.md","mtime":"2020-03-22T06:55:17.731Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-22T07:02:52.148Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"剑指offer","level":"1.9.1","depth":2,"next":{"title":"leetecode","level":"1.9.2","depth":2,"path":"coding_practice/leetcode/resolution.md","ref":"coding_practice/leetcode/resolution.md","articles":[]},"previous":{"title":"刷题","level":"1.9","depth":1,"ref":"","articles":[{"title":"剑指offer","level":"1.9.1","depth":2,"path":"coding_practice/sword_offer/resolution.md","ref":"coding_practice/sword_offer/resolution.md","articles":[]},{"title":"leetecode","level":"1.9.2","depth":2,"path":"coding_practice/leetcode/resolution.md","ref":"coding_practice/leetcode/resolution.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["theme-comscore","livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-comscore":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"coding_practice/sword_offer/resolution.md","mtime":"2020-03-22T06:55:17.731Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-22T07:21:11.095Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
@@ -463,6 +442,10 @@ public:
         
     <script src="../../gitbook/gitbook.js"></script>
     <script src="../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
     
         
         <script src="../../gitbook/gitbook-plugin-search/search-engine.js"></script>
