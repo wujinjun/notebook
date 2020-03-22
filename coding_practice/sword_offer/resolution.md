@@ -31,7 +31,7 @@ struct TreeNode {
 };*/
 class Solution {
 public:
-    vector<vector<int> > res;
+    vector<vector<int>> res;
     vector<int> path;
     void dfsFind(TreeNode* node, int sum) {
         if (node == NULL) {
