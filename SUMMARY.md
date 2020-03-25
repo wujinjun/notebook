@@ -2,13 +2,12 @@
 
 * [Introduction](README.md)
 * [数据结构和算法](datastructure_and_algorithm/README.md)
-    * [数据结构](datastructure_and_algorithm/data_sturcture.md)
-    * [算法](datastructure_and_algorithm/algorithm.md)
-* [UML和设计模式](UML_and_design_pattern/README.md)
-    * [UML笔记](UML_and_design_pattern/UML.md)
-* CPP
+    * [排序](datastructure_and_algorithm/sort.md)
+* [UML和设计模式](uml_and_design_pattern/README.md)
+    * [UML笔记](uml_and_design_pattern/UML.md)
+* cpp_review
 * 操作系统
-* python和数据分析
+* python_review
 * AI算法
 * Tensorflow
 * 刷题
