@@ -5,6 +5,9 @@
 * [Introduction](README.md)
 * [数据结构和算法](datastructure_and_algorithm/README.md)
     * [排序](datastructure_and_algorithm/sort.md)
+    * [链表](datastructure_and_algorithm/list.md)
+        * [代码](datastructure_and_algorithm/code/README.md) 
+            * [排序](datastructure_and_algorithm/code/sort/README.md) 
 * [UML和设计模式](uml_and_design_pattern/README.md)
     * [UML笔记](uml_and_design_pattern/UML.md)
 * cpp_review
