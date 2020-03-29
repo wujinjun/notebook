@@ -6,7 +6,7 @@
 - [x] insert sort
 - [x] select sort
 - [x] merge sort
-- [x] heap sort 
+- [x] heap sort  add 2020.3.27
 
 
 - [x] quick sort  review  2020.3.10

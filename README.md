@@ -24,12 +24,14 @@
 
 短期计划：
 
-1. 堆排序已完成学习，下一步需要再整理巩固一下[进度](datastructure_and_algorithm/code//README.md)
-2. 链表review，主要是做几道专项题 [进度](datastructure_and_algorithm/README.md)
+~~1. 堆排序已完成学习，下一步需要再整理巩固一下[进度](datastructure_and_algorithm/code//README.md)~~
+2. 梳理《极客时间》的算法内容，链表（原理+几道专项题） [进度](datastructure_and_algorithm/README.md)
+
 3. sword尽快再过一遍，并完善[笔记](coding_practice/sword_offer/resolution.md)
+
 4. 抽空了解一下各种设计模式，初步整理心得笔记，起码整理几个设计原则的笔记
 
-
+   
 
 长期计划：
 

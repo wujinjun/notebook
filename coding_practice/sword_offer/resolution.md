@@ -2,6 +2,253 @@
 
 [TOC]
 
+
+
+#### 树的子结构
+
+输入两棵二叉树A，B，判断B是不是A的子结构。（ps：我们约定空树不是任意一个树的子结构）
+
+```cpp
+/*
+struct TreeNode {
+	int val;
+	struct TreeNode *left;
+	struct TreeNode *right;
+	TreeNode(int x) :
+			val(x), left(NULL), right(NULL) {
+	}
+};*/
+class Solution {
+public:
+    bool HasSubtree(TreeNode* pRoot1, TreeNode* pRoot2)
+    {
+        bool res = false;
+        if(pRoot1 != NULL && pRoot2 != NULL) {
+            if(pRoot1->val == pRoot2->val) {
+                res = isSubtree(pRoot1,pRoot2);
+            }
+            if(!res) {
+                res = HasSubtree(pRoot1->left, pRoot2);
+            }
+            if(!res) {
+                res = HasSubtree(pRoot1->right, pRoot2);
+            }
+        }
+        return res;
+    }
+    bool isSubtree(TreeNode *p1, TreeNode* p2) {
+        if (p2 == NULL) {
+            return true;
+        }
+        if (p1 == NULL) {
+            return false;
+        }
+        if(p1->val != p2->val){
+            return false;
+        } 
+        return isSubtree(p1->left, p2->left) && isSubtree(p1->right, p2->right);
+    }
+};
+```
+
+#### 二叉树的镜像
+操作给定的二叉树，将其变换为源二叉树的镜像。
+输入描述:
+二叉树的镜像定义：源二叉树 
+    	    8
+    	   /  \
+    	  6   10
+    	 / \  / \
+    	5  7 9 11
+    	镜像二叉树
+    	    8
+    	   /  \
+    	  10   6
+    	 / \  / \
+    	11 9 7  5
+```cpp
+/*
+struct TreeNode {
+	int val;
+	struct TreeNode *left;
+	struct TreeNode *right;
+	TreeNode(int x) :
+			val(x), left(NULL), right(NULL) {
+	}
+};*/
+class Solution {
+public:
+    void Mirror(TreeNode *pRoot) {
+        if (pRoot == NULL) {
+            return;
+        }
+        TreeNode *pTemp = pRoot->right;
+        pRoot->right = pRoot->left;
+        pRoot->left = pTemp;
+        if (pRoot->left) {
+            Mirror(pRoot->left);
+        }
+        if (pRoot->right) {
+            Mirror(pRoot->right);
+        }
+        return;
+    }
+};
+```
+
+#### 顺时针打印矩阵
+输入一个矩阵，按照从外向里以顺时针的顺序依次打印出每一个数字，例如，如果输入如下4 X 4矩阵： 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 则依次打印出数字1,2,3,4,8,12,16,15,14,13,9,5,6,7,11,10.
+
+```cpp
+class Solution {
+public:
+    vector<int> printMatrix(vector<vector<int> > matrix) {
+        vector<vector<int> > copy(matrix);
+        vector<int> res;
+        while(copy.size() != 0 && copy[0].size() !=0) {
+            for (int i = 0; i < copy[0].size(); ++i) {
+                res.push_back(copy[0][i]);
+            }
+            copy.erase(copy.cbegin());
+            if(copy.size() != 0 && copy[0].size() != 0)
+                copy = rotate(copy);
+            }
+        return res;
+    }
+    vector<vector<int>> rotate(vector<vector<int> > matrix) {
+        vector <vector<int> > res(matrix[0].size(), vector<int> (matrix.size()));
+        int m = 0;
+        int n = 0;
+        for (int i = matrix[0].size() - 1; i >= 0; --i) {
+            for (int j = 0; j < matrix.size(); ++j) {
+                res[m][n++] = matrix[j][i];
+            }
+            m++;
+            n = 0;
+        }
+        return res;
+    }
+};
+```
+
+#### 包含min函数的栈
+定义栈的数据结构，请在该类型中实现一个能够得到栈中所含最小元素的min函数（时间复杂度应为O（1））。
+注意：保证测试中不会当栈为空的时候，对栈调用pop()或者min()或者top()方法。
+```cpp
+class Solution {
+public:
+    void push(int value) {
+        s.push(value);
+        if(s_min.empty() || value < s_min.top())
+            s_min.push(value);
+    }
+    void pop() {
+        if (s_min.top() == s.top()) 
+            s_min.pop(); 
+        s.pop();
+    }
+    int top() {
+        return s.top();
+    }
+    int min() {
+        return s_min.top();
+        
+    }
+private:
+    stack <int> s;
+    stack <int> s_min;
+
+};
+```
+
+#### 栈的压入、弹出序列
+输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否可能为该栈的弹出顺序。假设压入栈的所有数字均不相等。例如序列1,2,3,4,5是某栈的压入顺序，序列4,5,3,2,1是该压栈序列对应的一个弹出序列，但4,3,5,1,2就不可能是该压栈序列的弹出序列。（注意：这两个序列的长度是相等的）
+```cpp
+class Solution {
+public:
+    bool IsPopOrder(vector<int> pushV,vector<int> popV) {
+        //压入一个，尝试弹出一次，如果最后能够全部弹出，就说明是弹出序列
+        stack<int> s;
+        for (int i = 0, j = 0; i < pushV.size(); ++i) {
+            s.push(pushV[i]);
+            while( j < popV.size() && popV[j] == s.top()) {     //j < popV.size()  为什么？？？===》
+                s.pop();
+                j++;
+            }
+        }
+        return s.empty();
+    }
+};
+```
+
+#### 从上往下打印出二叉树的每个节点，同层节点从左至右打印。
+```cpp
+/*
+struct TreeNode {
+	int val;
+	struct TreeNode *left;
+	struct TreeNode *right;
+	TreeNode(int x) :
+			val(x), left(NULL), right(NULL) {
+	}
+};*/
+class Solution {
+public:
+    vector<int> PrintFromTopToBottom(TreeNode* root) {
+        queue<TreeNode*> line;
+        vector<int> res;
+        if (root == NULL) {
+            return res;
+        }
+        TreeNode *p;
+        line.push(root);
+        while(!line.empty()) {
+            p = line.front();
+            res.push_back(p->val);
+            if (p->left != NULL) {
+                line.push(p->left);
+            }
+            if (p->right != NULL) {
+                line.push(p->right);
+            }
+            line.pop();
+        }
+        return res;
+            
+    }
+};
+```
+
+####  二叉搜索树的后序遍历序列
+
+输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果。如果是则输出Yes,否则输出No。假设输入的数组的任意两个数字都互不相同。
+
+```cpp
+class Solution {
+public:
+    bool IsBST(vector<int> &a, int start, int end) {
+        // 结构：  左子树+右子树+根节点
+        if (start >= end) {                //该条件说明数组遍历结束，符合有序
+            return true;
+        }
+        int pivot;
+        for(pivot = end; a[--pivot] > a[end];);  // 寻找切分点，从后往前寻找
+        for(int i = pivot; i >= 0; i--) {        // 检查前半段数字是否都是符合小于根节点
+            if(a[i] > a[end]) return false;
+        }
+        return IsBST(a, start, pivot) && IsBST(a, pivot+1, end-1);    //分治递归检查
+        
+    }
+    bool VerifySquenceOfBST(vector<int> sequence) {
+        if(sequence.size()==0) return false;
+        return IsBST(sequence, 0, sequence.size()-1);
+    }
+    
+};
+```
+
+
+
 #### 二叉树中和为某一值的路径
 
 输入一颗二叉树的根节点和一个整数，打印出二叉树中结点值的和为输入整数的所有路径。路径定义为从树的根结点开始往下一直到叶结点所经过的结点形成一条路径。(注意: 在返回值的list中，数组长度大的数组靠前)
@@ -61,4 +308,66 @@ public:
 ```
 
 
+
+#### 复杂链表的复制
+
+输入一个复杂链表（每个节点中有节点值，以及两个指针，一个指向下一个节点，另一个特殊指针指向任意一个节点），返回结果为复制后复杂链表的head。（注意，输出结果中请不要返回参数中的节点引用，否则判题程序会直接返回空）
+
+```cpp
+/*
+struct RandomListNode {
+    int label;
+    struct RandomListNode *next, *random;
+    RandomListNode(int x) :
+            label(x), next(NULL), random(NULL) {
+    }
+};
+*/
+/*
+首先想到的办法是直接遍历一遍，把指针关系记录下来，复制的时候再把指针关系恢复上去；
+但是指针的指向关系是原始链表的指向关系，复制到新链表的话还是指向原始链表；
+解决方法1：
+1.遍历第一遍，在原始链表的每个节点后面插入一个新的节点
+2.遍历第二遍，用random指针来遍历，将每个节点的后继节点的random指向本节点random节点的next；
+    实际上是通过跟踪旧链表random的指向来更新新链表的random指针
+3.拆分链表，其实就是依次更新原链表和新链表的next指针，然后再迭代遍历链表；注意边界条件，不要访问到空指针
+*/
+class Solution {
+public:
+    RandomListNode* Clone(RandomListNode* pHead)
+    {
+        if (!pHead) return NULL;
+        RandomListNode *cur = pHead;
+        //1.第一次更新，复制节点
+        while (cur) {
+            RandomListNode *node = new RandomListNode(cur->label);
+            node->next = cur->next;
+            cur->next = node;
+            cur = node->next;
+        }
+        //2.第二次遍历，更新random指针
+        cur = pHead;
+        while (cur) {
+            RandomListNode *node = cur->next;
+            if(cur->random) {
+                node->random = cur->random->next;
+            }
+            cur = node->next;
+        }
+        //3. 第三次遍历，拆分链表
+        //拆分步骤需要思考：其实就是依次更新原链表和新链表的next指针，然后再迭代遍历链表
+        RandomListNode *newhead = pHead->next;
+        RandomListNode *newcur =  newhead;
+        cur = pHead;
+        while (cur) {
+            cur->next = cur->next->next;
+            if(newcur->next)    //最后一次循环的边界条件，避免访问空指针
+                newcur->next = newcur->next->next;
+            cur = cur->next;
+            newcur = newcur->next;
+        }
+        return newhead;
+    }
+};
+```
 
