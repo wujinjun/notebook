@@ -371,3 +371,56 @@ public:
 };
 ```
 
+二叉搜索树与双向链表
+
+输入一棵二叉搜索树，将该二叉搜索树转换成一个排序的双向链表。要求不能创建任何新的结点，只能调整树中结点指针的指向。
+
+解决思路： 最后返回一个排序的双向链表，因此：
+
+1. 先对二叉树进行中序遍历，把中序遍历的结果存储到一个数组中，
+2. 依次从数组中取出二叉树的节点串成双向链表
+
+```cpp
+/*
+struct TreeNode {
+	int val;
+	struct TreeNode *left;
+	struct TreeNode *right;
+	TreeNode(int x) :
+			val(x), left(NULL), right(NULL) {
+	}
+};*/
+class Solution {
+public:
+    TreeNode* Convert(TreeNode* pRootOfTree)
+    {
+        if(pRootOfTree == NULL) {
+            return NULL;
+        }
+        vector<TreeNode *> list;
+        Convert(pRootOfTree, list);		//中序遍历，并把节点存储到数组中
+        return ProcessList(list);			//把数组中的节点处理成双向链表
+    }
+    
+    void Convert(TreeNode* p, vector<TreeNode *> &list) {
+        if(p != NULL) {
+            Convert(p->left,list);
+            list.push_back(p);
+            Convert(p->right,list);
+        }
+        
+    }
+    TreeNode* ProcessList(vector<TreeNode *> list) {
+        TreeNode * head = list[0];
+        TreeNode * cur = head;
+        for(int i=1;i<list.size();++i) {
+            TreeNode * temp = list[i];		
+            temp->left = cur;				//第二个节点的前驱指向第一个节点
+            cur->right = temp;			//第一个节点的后继指向第二个节点
+            cur = temp;
+        }
+        return head;
+    }
+};
+```
+
