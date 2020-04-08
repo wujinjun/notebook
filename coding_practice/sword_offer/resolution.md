@@ -4,6 +4,36 @@
 
 
 
+#### 反转链表
+输入一个链表，反转链表后，输出新链表的表头
+```cpp
+/*
+struct ListNode {
+	int val;
+	struct ListNode *next;
+	ListNode(int x) :
+			val(x), next(NULL) {
+	}
+};*/
+class Solution {
+public:
+    ListNode* ReverseList(ListNode* pHead) {
+        ListNode *pre, *next,*cur;
+        pre = NULL;
+        cur = pHead;
+        next = NULL;
+        while (cur != NULL) {
+            next = cur->next;
+            cur->next = pre;
+            pre = cur;
+            cur = next;
+        }
+        return pre;
+    }
+};
+```
+
+
 #### 树的子结构
 
 输入两棵二叉树A，B，判断B是不是A的子结构。（ps：我们约定空树不是任意一个树的子结构）
