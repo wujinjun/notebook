@@ -401,7 +401,7 @@ public:
 };
 ```
 
-二叉搜索树与双向链表
+#### 二叉搜索树与双向链表
 
 输入一棵二叉搜索树，将该二叉搜索树转换成一个排序的双向链表。要求不能创建任何新的结点，只能调整树中结点指针的指向。
 
@@ -454,3 +454,52 @@ public:
 };
 ```
 
+#### 字符串的排列 （TODO）
+
+
+
+输入一个字符串,按字典序打印出该字符串中字符的所有排列。例如输入字符串abc,则打印出由字符a,b,c所能排列出来的所有字符串abc,acb,bac,bca,cab和cba。
+
+本题是一个DFS算法题，每层递归处理一个字符，字符串的长度就是递归的层数，可以画一棵多叉树来分析。
+
+思路：从头开始，用一个元素依次和字符串的每个元素交换，比如 abcd，a分别和b,c,d交换，这是第一层递归；固定a，用b依次与c,d交换，这是第二次递归；固定ab，用c和d交换，这是第三次递归；轮到d时，d的下标就是长度n-1，此时应当把字符串存起来；
+
+递归的遍历情况可以画一个树来表示，leetcode的题解有图，可以看看
+
+![](./38_1.png)
+
+* DFS的剪枝可以用一个set辅助来做，如abbcd，用下标为1的b依次与bcd交换时，和自己相同的b就不做交换
+
+![](38_2.png)
+
+题解：
+
+https://leetcode-cn.com/problems/zi-fu-chuan-de-pai-lie-lcof/solution/mian-shi-ti-38-zi-fu-chuan-de-pai-lie-hui-su-fa-by/
+
+```cpp
+//递归算法
+class Solution {
+public:
+    vector<string> permutation(string s) {
+        vector<string> res;
+        helper(res, s, 0);
+        sort(res.begin(), res.end());
+        return res;
+    }
+    void helper(vector<string> &res, string &str, int begin) {
+        if(begin == str.length()) {     //begin位置
+            res.push_back(str);
+            return;
+        }
+        set<int> help_set;	//用于辅助做剪枝
+        for(int i = begin; i < str.length(); ++i) {
+            if (help_set.count(str[i]) == 0) {	//只对set中不存在的元素进行交换
+                help_set.insert(str[i]);		//把交换过的都添加到set中
+                swap(str[i], str[begin]);   //把begin位置的元素和i位置的元素交换
+                helper(res, str, begin+1);  
+                swap(str[i], str[begin]);   //还原
+            }      
+        }
+    }
+};
+```
