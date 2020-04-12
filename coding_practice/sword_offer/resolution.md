@@ -454,17 +454,17 @@ public:
 };
 ```
 
-#### 字符串的排列 （TODO）
+#### 38.字符串的排列 
 
-
+* DFS+回溯+剪枝
 
 输入一个字符串,按字典序打印出该字符串中字符的所有排列。例如输入字符串abc,则打印出由字符a,b,c所能排列出来的所有字符串abc,acb,bac,bca,cab和cba。
 
-本题是一个DFS算法题，每层递归处理一个字符，字符串的长度就是递归的层数，可以画一棵多叉树来分析。
+
 
 思路：从头开始，用一个元素依次和字符串的每个元素交换，比如 abcd，a分别和b,c,d交换，这是第一层递归；固定a，用b依次与c,d交换，这是第二次递归；固定ab，用c和d交换，这是第三次递归；轮到d时，d的下标就是长度n-1，此时应当把字符串存起来；
 
-递归的遍历情况可以画一个树来表示，leetcode的题解有图，可以看看
+本题是一个DFS算法题，每层递归处理一个字符，字符串的长度就是递归的层数，可以画一棵多叉树来分析。递归的遍历情况可以画一个树来表示，leetcode的题解有图，可以看看
 
 ![](./38_1.png)
 
@@ -503,3 +503,151 @@ public:
     }
 };
 ```
+
+
+
+#### 39. 数组中出现次数超过一半的数字
+数组中有一个数字出现的次数超过数组长度的一半，请找出这个数字。 
+
+你可以假设数组是非空的，并且给定的数组总是存在多数元素。 
+
+示例 1:
+
+		输入: [1, 2, 3, 2, 2, 2, 5, 4, 2]
+		输出: 2
+
+
+
+**解法1**：  哈希法，找到出现数组长度二分之一的数字就返回
+
+```cpp
+class Solution {
+public:
+    int majorityElement(vector<int>& nums) {
+        unordered_map<int, int> hash;
+        int res = 0; 
+        int len = nums.size();
+        for(int i = 0; i< nums.size();++i) {
+            hash[nums[i]]++;
+            if(hash[nums[i]] > len/2) {
+                res = nums[i];
+                return res;
+            }  
+        }
+        return res;
+    }
+};
+```
+
+**解法2**：摩尔投票法：核心思想就是投票，出现相同的加票，出现不同的减票
+
+我的理解是：逐个比较，遇到和自己相同的票数+1，遇到和自己不同的票数-1；票数减到0就说明干掉这个数字了，让新的数字上任：
+
+```cpp
+class Solution {
+public:
+    int majorityElement(vector<int>& nums) {
+        int vote = 0, major = 0;
+        for (int i = 0 ; i<nums.size(); ++i) {
+	          //票数为0: 情况1:初始化 情况2:前面投的票都不相同 (有多票的情况下不会进这个逻辑)
+            if (vote == 0) { 
+                major = nums[i];      
+                vote = 1;
+            } else {
+                major == nums[i] ? ++vote:--vote;     //相同票数+1， 不同票数-1
+            }
+        }
+        return major;
+        
+    }
+};
+```
+
+
+
+#### [40. 最小的k个数](https://leetcode-cn.com/problems/zui-xiao-de-kge-shu-lcof/)
+
+输入整数数组 arr ，找出其中最小的 k 个数。例如，输入4、5、1、6、2、7、3、8这8个数字，则最小的4个数字是1、2、3、4。
+
+示例 1：
+
+		输入：arr = [3,2,1], k = 2
+		输出：[1,2] 或者 [2,1]
+示例 2：
+
+		输入：arr = [0,1,2,1], k = 1
+		输出：[0]
+
+**解法1：** 快排
+
+```cpp
+class Solution {
+public:
+    vector<int> getLeastNumbers(vector<int>& arr, int k) {
+        vector<int> res;
+        if (arr.size() == 0 || k == 0) {
+            return res;
+        }
+        quick_sort(arr, 0, arr.size()-1);
+        for(int i = 0; i < k;++i) {
+            res.push_back(arr[i]);
+        }
+        return res;
+    }
+    
+    void quick_sort(vector<int>& arr, int lo, int hi) {
+        if (lo >= hi) {
+            return;
+        }
+        int j = partition(arr, lo, hi);
+        quick_sort(arr, lo, j-1);
+        quick_sort(arr, j+1, hi);
+
+    }
+
+    int partition(vector<int> &arr, int lo, int hi) {
+        int pivot = arr[lo];
+        int i = lo, j = hi+1;
+        while(true) {
+            while(++i <= hi && arr[i]< pivot);
+            while(--j >= lo && arr[j] > pivot);
+            if(i >= j) break;
+            swap(arr[i],arr[j]);
+        }
+        swap(arr[lo],arr[j]);
+        return j;
+    }
+};
+```
+
+**解法2：**堆
+
+思路：初始化一个大小为k的优先队列（大顶堆），然后遍历数组，比堆顶小的数就入堆，数组遍历结束后，堆里的k个数字就是最小的k个数字
+
+```cpp
+class Solution {
+public:
+    vector<int> getLeastNumbers(vector<int>& arr, int k) {
+        vector<int> res;
+        if(arr.size() == 0 || k ==0) {
+            return res;
+        }
+        priority_queue<int> que;
+        for(int i = 0; i < k;++i) {
+            que.push(arr[i]);
+        }
+        for(int i = k; i < arr.size();++i) {
+            if(que.top()>arr[i]) {
+                que.pop();
+                que.push(arr[i]);
+            }
+        }
+        for(int i = 0; i<k; ++i) {
+            res.push_back(que.top());
+            que.pop();
+        }
+        return res;
+    }
+};
+```
+
