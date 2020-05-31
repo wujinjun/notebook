@@ -92,13 +92,21 @@ public:
 
 ## Review
 
+https://www.kdnuggets.com/2016/08/10-algorithms-machine-learning-engineers.html
 
+这篇文章简要描述了10个算法的大致原理，适合了解概念；
 
-
+但是具体地，为什么有这样的效果还需要进一步研究，
 
 ## Tip
 
 
 
+
+
 ## Share
+
+开始
+
+
 
