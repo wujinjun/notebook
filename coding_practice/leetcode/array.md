@@ -54,14 +54,16 @@ public:
 
 方法：快慢指针
 思路：用快指针去遍历，用慢指针去覆盖写，但是引入条件“允许重复两个数字”后，需要加个计数器来操作，难点在于如何设计才能bug free
+
 刚开始的思路是数字重复/数字不重复的两个分支处理，但是bug很多没法优雅解决；
 
-* 为了优雅解决，还是需要理一下设计思路
-* 先处理计数器，再更新数组；
+为了优雅解决，还是需要理一下设计思路：**覆盖多余的重复项**
 
-* 题目里有个明显的规律就是允许两个重复数字连续，那么就判断count <= 2的时候覆盖写数组；
-
-* 这道题想做出来首先得理清楚思路，先干什么再干什么，上来蛮干的话bug很多；
+1. 使用快指针fast和慢指针slow，fast用来遍历， slow用来覆盖
+2. 用count记录出现的次数，count初始化为1
+3. 从下标1开始处理，如果nums[i] == nums[i-1]，那么count++; 如果count>2则说明遇到了相同数字，且大于2，此时只移动fast指针，slow指针不动
+4. 处理完count以后，判断是否满足count<=2，如果满足则可以用slow指针来覆盖写，并将slow++；
+5. 数组遍历完成后，返回直接返回慢指针slow即可 （实际上slow是个下标，由于覆盖写完后会执行slow++，因此不必返回slow+1，直接返回slow即可）
 
 ```cpp
 class Solution {
@@ -88,5 +90,49 @@ public:
 };
 ```
 
-方法2：
+
+
+
+
+
+
+
+
+
+
+####[189. 旋转数组](https://leetcode-cn.com/problems/rotate-array/)
+
+方法：多次翻转，常用套路
+
+1. 全部翻转
+2. 前半部分翻转
+3. 后半部分翻转
+
+辅助数组的办法不满足空间复杂度为O(1)的要求，暴力解法会超时；
+
+* 注意旋转k个长度，需要用k = k % nums.size()来优化，否则可能会重复移动导致超时
+
+```cpp
+class Solution {
+public:
+    void reverse(vector<int>& nums, int begin, int end) {
+        int tmp;
+        while(begin < end) {
+            swap(nums[begin++], nums[end--]);
+        }
+    }
+
+    void rotate(vector<int>& nums, int k) {
+        int pre;
+        int len = nums.size();
+        if(len == 0) {
+            return;
+        }
+        k = k % len;
+        reverse(nums, 0, len-1);
+        reverse(nums, 0, k-1);
+        reverse(nums, k, len - 1);
+    }
+};
+```
 
