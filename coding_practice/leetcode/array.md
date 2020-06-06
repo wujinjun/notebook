@@ -136,3 +136,55 @@ public:
 };
 ```
 
+
+
+
+
+####[277. 搜寻名人](https://leetcode-cn.com/problems/find-the-celebrity/)
+
+方法：双指针法
+
+思路：用给定函数knows先用排除法缩小范围到1个人；然后考察这个人是不是名人，
+
+不是名人的考察条件是“他认识其他人” 或“其他人不认识他”
+
+```CPP
+/* The knows API is defined for you.
+      bool knows(int a, int b); */
+
+
+// knows(a, b)返回true说明a认识b，a不是名人；返回false说明不认识b，则b不是名人
+// 如果A是名人，B代表普通人，有两个条件：A不认识B， B认识A；
+// 条件空间也就只有四种：
+// A->B     (A不是名人)        
+// A<-B     (B不是名人)
+// A<->B    (A,B都不是名人)
+// A--B     (A,B都不是名人)
+// knows函数返回的结果可以排除一个，可以利用它来比那里
+class Solution {
+public:
+    int findCelebrity(int n) {
+        int left = 0;
+        int right = n-1;
+        while(left < right) {
+            if(knows(left, right)) {    // 返回true则说明left不是名人
+                left++;
+            } else {                    // 返回false说明right不是名人
+                right--;    
+            }
+        }
+        // 上面程序执行结束后，left==right，没有考虑left是不是名人，下面通过两个case来确认
+        for (int i = 0; i < n; ++i) {
+            if (i != left) {            // 和left比较的对象不能是left自己
+                // case1：left认识i则说明left不是名人；
+                // case2: i不认识left，说明left不是名人
+                if (knows(left, i) || !knows(i, left)) {    
+                    return -1;
+                }
+            }            
+        }
+        return  left;
+    }
+};
+```
+
