@@ -92,54 +92,6 @@ public:
 
 
 
-
-
-
-
-
-
-
-
-####[189. 旋转数组](https://leetcode-cn.com/problems/rotate-array/)
-
-方法：多次翻转，常用套路
-
-1. 全部翻转
-2. 前半部分翻转
-3. 后半部分翻转
-
-辅助数组的办法不满足空间复杂度为O(1)的要求，暴力解法会超时；
-
-* 注意旋转k个长度，需要用k = k % nums.size()来优化，否则可能会重复移动导致超时
-
-```cpp
-class Solution {
-public:
-    void reverse(vector<int>& nums, int begin, int end) {
-        int tmp;
-        while(begin < end) {
-            swap(nums[begin++], nums[end--]);
-        }
-    }
-
-    void rotate(vector<int>& nums, int k) {
-        int pre;
-        int len = nums.size();
-        if(len == 0) {
-            return;
-        }
-        k = k % len;
-        reverse(nums, 0, len-1);
-        reverse(nums, 0, k-1);
-        reverse(nums, k, len - 1);
-    }
-};
-```
-
-
-
-
-
 ####[277. 搜寻名人](https://leetcode-cn.com/problems/find-the-celebrity/)
 
 方法：双指针法
@@ -187,4 +139,89 @@ public:
     }
 };
 ```
+
+
+
+
+
+####[189. 旋转数组](https://leetcode-cn.com/problems/rotate-array/)
+
+方法：多次翻转，常用套路
+
+1. 全部翻转
+2. 前半部分翻转
+3. 后半部分翻转
+
+辅助数组的办法不满足空间复杂度为O(1)的要求，暴力解法会超时；
+
+* 注意旋转k个长度，需要用k = k % nums.size()来优化，否则可能会重复移动导致超时
+
+```cpp
+class Solution {
+public:
+    void reverse(vector<int>& nums, int begin, int end) {
+        int tmp;
+        while(begin < end) {
+            swap(nums[begin++], nums[end--]);
+        }
+    }
+
+    void rotate(vector<int>& nums, int k) {
+        int pre;
+        int len = nums.size();
+        if(len == 0) {
+            return;
+        }
+        k = k % len;
+        reverse(nums, 0, len-1);
+        reverse(nums, 0, k-1);
+        reverse(nums, k, len - 1);
+    }
+};
+```
+
+
+
+
+
+#### [41. 缺失的第一个正数](https://leetcode-cn.com/problems/first-missing-positive/)(https://leetcode-cn.com/problems/first-missing-positive/)
+
+方法：hash，key记录正整数，val对应是否出现过；
+思路：用hash来标记nums中出现过的正整数，key占位，val标记是否出现过；
+
+* 考虑一般情况，从小到大遍历hash表，第一次出现val为0的数字就是最小的数字；
+
+* 考虑如果n个数从1到n都在nums中这种情况，需要返回max+1；
+```cpp
+class Solution {
+public:
+    int firstMissingPositive(vector<int>& nums) {
+        int max = 0;
+        for(int i = 0; i < nums.size(); ++i) {
+            if (max < nums[i] && nums[i]!=INT_MAX) { //处理最大值是INT_MAX的情况
+                max = nums[i];
+            }
+        }
+        if (max <= 1) {
+            return max == 1 ? 2 : 1;    //处理数组只有一个元素的情况
+        }
+
+        map<int, int> hash;
+        for (int i = 0; i < nums.size(); ++i) {
+            if (nums[i] > 0) {
+                hash[nums[i]] = 1;
+            }
+        }
+        
+        for (int i = 1; i < max + 1; ++i) {
+            if (hash[i] == 0){
+                return i;
+            }
+        }
+        return max + 1;
+    }
+};
+```
+
+
 
