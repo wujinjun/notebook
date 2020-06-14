@@ -1,4 +1,4 @@
-# ARTS-WEEKX 模板
+# ARTS-WEEK
 
 ## Algorithm 
 
