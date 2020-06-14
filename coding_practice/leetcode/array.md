@@ -225,3 +225,48 @@ public:
 
 
 
+
+
+
+
+#### [299. 猜数字游戏](https://leetcode-cn.com/problems/bulls-and-cows/)
+方法：哈希表
+思路:
+先处理公牛，再处理母牛；
+
+1. 建立副本（其实可以直接用参数，但安全起见还是复制一下）分别保存为ss和sg；
+2. 遍历ss和sg如果有符合公牛的情况，则公牛计数countA++, 并把公牛位置写成脏数据 ‘a’ ‘z’；
+3. 同时建立hash表，记录猜过的数字和次数
+4. 再次遍历ss，并以ss[i]为键在hash表中查询，如果出现过就将母牛计数countB++，同时把hash中的计数减一；
+5. 最后组装答案返回
+
+```cpp
+class Solution {
+public:
+    string getHint(string secret, string guess) {
+        unordered_map<char, int> map;
+        int countA = 0, countB = 0;
+
+        // 处理公牛，即位置和数值都相同的数字
+        for(int i = 0; i < secret.length(); ++i) {
+            if(secret[i] == guess [i]) {
+                countA++;
+                secret[i] = 'a';
+                guess[i] = 'z';
+            } else {
+                map[guess[i]]++;   //先用hash记录猜过的每个数字的个数
+            }
+        }
+        // 处理母牛，即数值相同但是位置不同
+        for(int i = 0; i < secret.length(); ++i) {
+            if (secret[i] >= '0' && secret[i] <= '9' 
+                && map[secret[i]] >= 1 ) {  //检查hash表中有没有猜过的数字，有就加一，并把hash里的计数减一
+                countB++;
+                map[secret[i]]--;
+            }
+        }
+        return to_string(countA) + "A" + to_string(countB) + "B";
+    }
+};
+
+```
