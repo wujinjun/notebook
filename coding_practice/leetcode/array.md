@@ -270,3 +270,31 @@ public:
 };
 
 ```
+
+#### [134. 加油站](https://leetcode-cn.com/problems/gas-station/)
+
+方法：没什么特殊方法，读懂题目意思就好做
+
+思路：逐个遍历排除，由于循环对称性，只需要从下标0开始遍历就可以
+
+```cpp
+class Solution {
+public:
+    int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
+        int n = gas.size();
+        int remain = 0;
+        int total = 0;
+        int station = 0;
+        for (int i = 0; i < n; i++) {
+            total += gas[i] - cost[i];	//计算所有加油站加的油减去所有路上消耗的油，用来判断是否返回-1；
+            remain += gas[i] - cost [i];	//计算每次走一段路，油箱余量油==加的油减去消耗的油
+            if (remain < 0) {		//如果油箱余量油小于0，那么这个加油站肯定不是起点
+                station = i+1;	//考察下一个加油站
+                remain = 0;     //清空油箱
+            }
+        }
+        return total >= 0 ? station : -1;
+    }
+};
+```
+
