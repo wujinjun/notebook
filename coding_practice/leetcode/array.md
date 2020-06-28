@@ -298,3 +298,88 @@ public:
 };
 ```
 
+#### [274. H 指数](https://leetcode-cn.com/problems/h-index/)
+
+方法：哈希表法
+
+思路：暴力法O(N^2)复杂度，建立一个哈希表，用来记录引用1，2，...， N次的文章总共有几篇；
+
+```cpp
+class Solution {
+public:
+    //用一个哈希表记录
+    int hIndex(vector<int>& citations) {
+        unordered_map<int,int> hash;//用来记录引用0，1，..., n次的论文有几篇
+        int res = 0;
+        for (int i = 0; i < citations.size(); ++i) {
+            for (int j = 1;j <= citations[i]; ++j) {
+                hash[j]++;
+                if(hash[j] == j) {
+                    res = j;
+                }
+            }            
+        }
+        return res;
+    }
+};
+```
+
+#### [175. H指数 II](https://leetcode-cn.com/problems/h-index-ii/)
+方法:  二分查找
+思路：二分查找的复杂度为O(logN); 该题的关键是想出来什么情况下该向右搜索，什么情况下该向左搜索； 思考的捷径就是考虑一些比较极端的例子，如[1,1,1,1,2,3]就会非常形象地确认边界条件；
+papercount = len - mid 论文数量
+* 引用次数 < 论文数量:    cit[i] < papercount，应该向右搜索
+* 引用次数 > 论文数量:  cit[i] > papercount，应该向左搜索
+* 返回值就是论文的h值，此时跳出while循环后 low == high； 返回值为 len - low == len -high；
+* 需要注意的是，需要处理输入的特殊情况，[] 或[0]这种输入；
+```cpp
+class Solution {
+public:
+    int hIndex(vector<int>& citations) {
+        if(citations.size() == 0 || citations.back() == 0) return 0; 
+        int low = 0; 
+        int high = citations.size()-1, len = citations.size();
+        int mid = 0;
+        while (low < high) {
+            int mid = low + (high - low)/2;
+            int papercount = len - mid; //统计论文数量
+            if (citations[mid] < papercount) {  //向右搜索, 形象的例子[1,1,1,1,2,3]
+                low = mid + 1; 
+            } else if(citations[mid] > papercount){     //向左搜索, 形象的例子[5,6,7,8,9]
+                high = mid;
+            } else {
+                return len - mid;
+            }
+        }
+        return len - low;
+    }
+};
+```
+#### [243. 最短单词距离](https://leetcode-cn.com/problems/shortest-word-distance/)
+方法：双指针法
+思路：分别用两个指针去标记两个单词的下标；然后每出现一次就计算一次距离，并取最小值
+
+```cpp
+class Solution {
+public:
+    int shortestDistance(vector<string>& words, string word1, string word2) {
+        int pos1 = -1;
+        int pos2 = -1;
+        int res = INT_MAX;
+        for (int i = 0; i < words.size();++i) {
+            if (words[i].compare(word1) == 0){
+                pos1 = i;
+            } else if (words[i].compare(word2) == 0) {
+                pos2 = i;
+            }
+            if (pos1 != -1 && pos2 != -1 && abs(pos2 - pos1) < res) {
+                res = abs(pos2 - pos1);
+            }
+        }
+        return res;
+    }
+};
+```
+
+
+
