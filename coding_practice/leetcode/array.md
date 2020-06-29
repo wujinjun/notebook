@@ -381,5 +381,47 @@ public:
 };
 ```
 
+#### [244. 最短单词距离 II](https://leetcode-cn.com/problems/shortest-word-distance-ii/)
+方法： 哈希+双指针法
+思路：用哈希存下来所有单词出现的下标，用vector存，然后用双指针分别在两个数组里取值、作差比较，直到得到最小值res为止；
 
+
+```cpp
+class WordDistance {
+public:
+    unordered_map<string, vector<int>> hash;
+    WordDistance(vector<string>& words) {
+        for (int i = 0; i < words.size();++i) {
+            hash[words[i]].push_back(i);    //key是单词， value是单词出现的下标,用vector存起来
+        }
+    }
+    
+    int shortest(string word1, string word2) {
+        int res = INT_MAX;
+        //从hash中取出对应单词的vector
+        vector<int> &vec1  = hash[word1];   //从hash中取出对应单词的vector
+        vector<int> &vec2  = hash[word2];
+        //双指针法作差比较，指针都初始化为0；
+        int pos1 = 0;
+        int pos2 = 0;
+        while (pos1 < vec1.size() && pos2 < vec2.size()) {
+            // 选择"res"和"差值"中较小的作为res;
+            res = min(res, abs(vec2[pos2] - vec1[pos1]));
+            //指针的移动处理，将取值较小的指针+1
+            if (vec1[pos1] < vec2[pos2]) {                
+                ++pos1;
+            } else {
+                ++pos2;
+            }
+        }
+        return res;
+    }
+};
+
+/**
+ * Your WordDistance object will be instantiated and called as such:
+ * WordDistance* obj = new WordDistance(words);
+ * int param_1 = obj->shortest(word1,word2);
+ */
+```
 
