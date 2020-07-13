@@ -425,3 +425,117 @@ public:
  */
 ```
 
+
+
+#### [217. 存在重复元素](https://leetcode-cn.com/problems/contains-duplicate/)
+
+方法：哈希，set
+
+思路：
+
+哈希法，value用来计数出现的次数
+
+set法，相当于去重，比较容器size，不相等则说明有重复的元素
+
+```cpp
+// set法
+class Solution {
+public:
+    bool containsDuplicate(vector<int>& nums) {
+        return nums.size() > set<int>(nums.begin(), nums.end()).size();
+        
+    }
+};
+
+//哈希表法
+class Solution {
+public:
+    bool containsDuplicate(vector<int>& nums) {
+        unordered_map<int,int> map;
+        for (int i = 0; i < nums.size(); ++i) {
+            map[nums[i]]++;
+            if (map[nums[i]] > 1) {
+                return true;
+            }
+        }
+        return false;
+    }
+};
+
+
+```
+
+
+
+#### [55. 跳跃游戏](https://leetcode-cn.com/problems/jump-game/)
+
+方法： 贪心
+
+思路： 这道题的解题点在于“从每个下标出发，能到达的最远距离是否达到了最后的位置”
+核心代码就一行
+`max_dis = max(max_dis, i + nums[i]);`; 就是更新max_dis，游戏开始的时候初始化为`max_dis = nums[0];`
+
+
+
+```cpp
+class Solution {
+public:
+    bool canJump(vector<int>& nums) {
+         int len = nums.size();
+         if (len <= 1) return true;
+
+         int max_dis = nums[0];
+         //输入: [3,2,1,0,4]
+         for (int i = 1 ; i < len; ++i) {
+             if (i <= max_dis) {
+                 //下标为i的位置最远能到的距离就是:i目前的位置 + 从i开始可跳出的最远距离
+                 max_dis = max(max_dis, i + nums[i]);    
+             }
+         }
+        return max_dis >= len - 1;
+    }
+};
+```
+
+
+
+#### [45. 跳跃游戏 II](https://leetcode-cn.com/problems/jump-game-ii/)
+
+方法： 贪心
+
+思路： 首先不可否认的是这道题的贪心还是比较取巧的，是跳跃游戏的加强版；
+
+基本的思路就是在每次跳跃时，都跳到最远的地方；这样的话，跳跃的次数就最少。
+
+* 实际上从下标0开始跳，所以起跳地点jump_idx初始化为0；
+* for循环开始考察每个下标能够跳到的最远距离：`max_pos = max(max_pos, nums[i]+ i);`
+* for循环里考察到起跳地点时`i == jump_idx`：
+  * 把当前能跳到的最远距离`max_pos`作为新的起跳地点`jump_idx = max_pos`;
+  * 跳跃次数加一`++steps;`
+  * 边界条件：如果起跳地点到达终点或者超出终点`jump_idx >= len-1`，则说明已经得到了最终结果，打断循环返回steps即可
+
+```cpp
+class Solution {
+public:
+    int jump(vector<int>& nums) {
+        int steps = 0;
+        int jump_idx = 0;   //用来记录再次起跳的位置
+        int max_pos = 0;
+        int len = nums.size();
+        //不用考虑从最后一个位置起跳的情况，所以i < nums.size()-1，而不是i < nums.size()
+        for (int i = 0; i < len-1; ++i){ 
+            max_pos = max(max_pos, nums[i]+ i);
+            // 会不会一直迭代下去？什么时候停止++steps？
+            // 隐藏的边界条件，i < len - 1 ==> jump_idx < len - 1; 所以jump_idx超出len - 1以后，结果就定下来了
+            if (i == jump_idx) {        //i到达起跳位置
+                jump_idx = max_pos;     //下次起跳位置设置为本次贪心计算得到的最远距离处
+                ++steps;
+                if (jump_idx >= len-1) {    //优化：起跳点达到或者超过终点就可以结束循环了
+                    break;
+                }
+            }
+        }
+        return steps;
+    }
+};
+```
